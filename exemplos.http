@@ -1,0 +1,55 @@
+### Exemplos de requisicoes (da para rodar direto no IntelliJ ou no VS Code com a extensao REST Client)
+### Suba antes com: mvn spring-boot:run -Dspring-boot.run.profiles=demo
+
+### Painel: quantos documentos vencidos, vencendo e em dia
+GET http://localhost:8080/documentos/painel
+
+### O motorista 2 pode sair com o caminhao 2?
+GET http://localhost:8080/viagens/liberacao?motoristaId=2&veiculoId=2
+
+### So os vencidos
+GET http://localhost:8080/documentos?situacao=VENCIDO
+
+### Vencidos + os que vencem nos proximos 15 dias
+GET http://localhost:8080/documentos/vencendo?dias=15
+
+### Documentos de um motorista
+GET http://localhost:8080/motoristas/2/documentos
+
+### Novo motorista
+POST http://localhost:8080/motoristas
+Content-Type: application/json
+
+{
+  "nome": "Daniela Kunz",
+  "matricula": "M004"
+}
+
+### Novo veiculo (aceita placa antiga ou Mercosul, com ou sem hifen)
+POST http://localhost:8080/veiculos
+Content-Type: application/json
+
+{
+  "placa": "ABC-1D23",
+  "descricao": "Mercedes Actros - tanque"
+}
+
+### Cadastrar documento do motorista
+POST http://localhost:8080/documentos
+Content-Type: application/json
+
+{
+  "tipo": "CNH",
+  "numero": "01234567890",
+  "validade": "2029-03-15",
+  "motoristaId": 4
+}
+
+### Renovar um documento (a validade nova precisa ser depois da atual)
+PUT http://localhost:8080/documentos/6/renovacao
+Content-Type: application/json
+
+{
+  "numero": "MOPP-2031",
+  "validade": "2031-11-20"
+}
